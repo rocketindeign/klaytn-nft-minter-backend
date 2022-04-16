@@ -5,7 +5,7 @@ const headers = {
   "x-chain-id":process.env.KAS_CHAIN_ID,
   "Content-Type":"application/json"
 }
-const contractAddr = "nft-test"
+const contractAddr = process.env.CONTRACT_ADDRESS || "nft-test"
 async function getContractList() {
   var r = await axios.get("https://kip17-api.klaytnapi.com/v1/contract",{headers});
   console.log(r.data)
@@ -14,7 +14,7 @@ async function getContractList() {
 
 async function kasKip17Mint(to, id, uri) {
   console.log("contractaddr", contractAddr)
-  var r = await axios.post(`https://kip17-api.klaytnapi.com/v1/contract/${contractAddr}/token`,{
+  var r = await axios.post(`https://kip17-api.klaytnapi.com/v2/contract/${contractAddr}/token`,{
     to, id, uri },{headers})
   .catch(function(err) {
     console.log('failed to deploy', err)
